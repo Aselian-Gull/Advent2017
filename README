@@ -1,0 +1,9 @@
+You may be wondering what's happening here.
+
+This is, to be brief, my record of the 2017 Advent of Code.  Trying to stay on top of things and organized this year - with kids running around I'm not going to be hitting many leaderboards, but I might as well have something to show for my efforts.
+
+To that end, I've set myself a bonus challenge - even if other techniques would be easier, I'm going to do every challenge in Python.  There's a few so far I could have probably grep'd through, but rules are rules.  It doesn't seem like much of a challenge, but on November 30th I didn't know any Python at all.  Learn by doing, as they say.
+
+So that's the plan.  Twenty-five Python scripts, set up to solve all the challenges.  It's clumsy, but going well - surprisingly well, honestly.  I've commented out the fleeting idea to just import solveadventofcode - I should keep at least some challenge going.
+
+Enjoy the code, enjoy the commentary!
