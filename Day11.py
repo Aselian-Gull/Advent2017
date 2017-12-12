@@ -7,10 +7,13 @@ f.close()
 
 row = 0
 col = 0
-minrow = 0
-mincol = 0
-maxcol = 0
-maxrow = 0
+maxdist = 0
+def hexDist(row, col):
+    tempdist = abs(col)
+    if abs(col) < abs(row):
+        tempdist = tempdist + (abs(row) - abs(col)) / 2
+    return tempdist
+
 inputTokens = inputLine.strip('\n').split(',')
 
 for token in inputTokens:
@@ -30,16 +33,8 @@ for token in inputTokens:
     elif token == "nw":
         row += 1
         col -= 1
-    if row > maxrow:
-        maxrow = row
-    if row < minrow:
-        minrow = row
-    if col > maxcol:
-        maxcol = col
-    if col < mincol:
-        mincol = col
+    maxdist = max(maxdist, hexDist(row, col))
 
 print ("Hello world, I'm up and alive!")
-print (row, col)
-print (minrow, mincol)
-print (maxrow, maxcol)
+print ("%d, %d has a distance of %d" % (row, col, hexDist(row, col)))
+print ("The furthest we got was %d" % maxdist)
