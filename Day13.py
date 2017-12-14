@@ -34,37 +34,3 @@ for tryDelay in range(0, 10000000):
     if canPass > 0:
         print("If we wait %d picoseconds, we'll make it through." % tryDelay)
         break
-    
-# The following are legacy functions from a failed attempt.
-
-def moveScanners(posVec, dirVec):
-    for idx in range(0, numScans + 1):
-        depth = depths.get(idx, 0)
-        if depth == 0:
-            continue
-        posVec[idx] = posVec[idx] + dirVec[idx]
-        if posVec[idx] + 1 == depth:
-            dirVec[idx] = -1
-        elif posVec[idx] == 0:
-            dirVec[idx] = 1
-
-
-def delaySeverity(delayTest):
-    scannerPos = []
-    scannerDir = []
-    
-    for idx in range(0, numScans+1):
-        scannerPos.append(0)
-        scannerDir.append(1)
-                
-    for t in range(0, delayTest):
-        moveScanners(scannerPos, scannerDir)        
-    totalSeverity = 0
-    curPos = 0
-    while curPos < numScans:
-        moveScanners(scannerPos, scannerDir)
-        curPos = curPos + 1
-        depth = depths.get(curPos, 0)
-        if scannerPos[curPos] == 0 and depth != 0:
-            totalSeverity = totalSeverity + (curPos * depths.get(curPos, 0))
-    return totalSeverity
