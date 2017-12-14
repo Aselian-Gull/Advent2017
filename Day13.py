@@ -12,7 +12,31 @@ for line in inputLines:
     depths[int(tokens[0])] = int(tokens[1])
     numScans = max(numScans, int(tokens[0]))
 
+# Right.  Calculate the severity for starting immediately.
+severity = 0
+for col in depths:
+    depth = depths[col]
+    cycle = 2 * (depth - 1)
+    if depth != 0 and col % cycle == 0:
+        severity = severity + (depth * col)
+        
+print ("Severity is equal to %d" % severity)
+
+# Now just brute-force it.  Can we do better?
+for tryDelay in range(0, 10000000):
+    canPass = 1
+    for idx in depths:
+        depth = depths[idx]
+        cycle = 2 * (depth - 1)
+        if ((tryDelay + idx) % cycle) == 0:
+            canPass = 0
+            break
+    if canPass > 0:
+        print("If we wait %d picoseconds, we'll make it through." % tryDelay)
+        break
     
+# The following are legacy functions from a failed attempt.
+
 def moveScanners(posVec, dirVec):
     for idx in range(0, numScans + 1):
         depth = depths.get(idx, 0)
@@ -23,6 +47,7 @@ def moveScanners(posVec, dirVec):
             dirVec[idx] = -1
         elif posVec[idx] == 0:
             dirVec[idx] = 1
+
 
 def delaySeverity(delayTest):
     scannerPos = []
@@ -43,19 +68,3 @@ def delaySeverity(delayTest):
         if scannerPos[curPos] == 0 and depth != 0:
             totalSeverity = totalSeverity + (curPos * depths.get(curPos, 0))
     return totalSeverity
-
-print ("Severity is equal to %d" % delaySeverity(0))
-
-for tryDelay in range(0, 10000000):
-    canPass = 1
-    for idx in range(0, numScans+1):
-        depth = depths.get(idx, 0)
-        if depth == 0:
-            continue
-        cycle = 2 * (depth - 1)
-        if ((tryDelay + idx) % cycle) == 0:
-            canPass = 0
-            break
-    if canPass > 0:
-        print("If we wait %d picoseconds, we'll make it through." % tryDelay)
-        break
