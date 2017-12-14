@@ -32,23 +32,30 @@ day10Hash(intvalues, keyInts, intSkipPos)
 print ("The product of the first two hashed ints is %d" % (intvalues[0] * intvalues[1]))
 
 # Right.  Now let's really ramp things up.
-keyChrs = []
-for token in inStream.strip('\n'):
-    keyChrs.append(ord(token))
-keyChrs.append(17)
-keyChrs.append(31)
-keyChrs.append(73)
-keyChrs.append(47)
-keyChrs.append(23)
+def knotHash(key):
+    keyChrs = []
+    sparseVals = []
+    for ch in range(256):
+        sparseVals.append(ch)
+    for token in key:
+        keyChrs.append(ord(token))
+    keyChrs.append(17)
+    keyChrs.append(31)
+    keyChrs.append(73)
+    keyChrs.append(47)
+    keyChrs.append(23)
+    
+    charSkipPos = [0, 0]
+    for timeRun in range(64):
+        day10Hash(sparseVals, keyChrs, charSkipPos)
+    
+    # Now XOR it all.
+    dense2 = 0
+    for charIdx in range(256):
+        if(charIdx % 16 == 0):
+            dense2 = dense2 << 8
+        dense2 = dense2 ^ sparseVals[charIdx]
+    
+    return dense2
 
-charSkipPos = [0, 0]
-for timeRun in range(0, 64):
-    day10Hash(sparseVals, keyChrs, charSkipPos)
-
-# Now XOR it all.
-dense2 = 0
-for charIdx in range(0, maxlen):
-    if(charIdx % 16 == 0):
-        dense2 = dense2 << 8
-    dense2 = dense2 ^ sparseVals[charIdx]
-print(hex(dense2))
+print(hex(knotHash(inStream.strip('\n'))))

@@ -17,7 +17,7 @@ severity = 0
 for col in depths:
     depth = depths[col]
     cycle = 2 * (depth - 1)
-    if depth != 0 and col % cycle == 0:
+    if depth != 0 and col % cycle == 0: # Looks like we hit the un-sweet spot.
         severity = severity + (depth * col)
         
 print ("Severity is equal to %d" % severity)
