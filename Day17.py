@@ -10,22 +10,20 @@ curPos = 0
 
 # Compute the list up to this point.
 for val in range(year):
-    newPos = (curPos + keyval) % (val + 1)
-    locked.insert(newPos+1, (val+1))
-    curPos = newPos + 1
+    curPos = (curPos + keyval) % (val + 1) + 1
+    locked.insert(curPos, (val+1))
 
 # Find the item after 2017.
 for item in range(len(locked)):
     if locked[item] == year:
-        print(locked[item+1])
+        print("Item after 2017 is %d" % locked[item+1])
         break
 
 # Rather than trouble ourselves with actually maintaining the list after this
 # let's just spit out every item we insert after 0.
 for val in range(year, 50000000):
-    newPos = (curPos + keyval) % (val + 1)
-    if (newPos == 0):
-        print(val+1)
-    curPos = newPos + 1
+    curPos = (curPos + keyval) % (val + 1) + 1
+    if (curPos == 1):   # Right after zero
+        print("Inserted %d" % (val+1))
     
 print ("And that's how we save Christmas.")

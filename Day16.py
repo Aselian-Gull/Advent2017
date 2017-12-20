@@ -47,7 +47,7 @@ def tenfold(baseSwaps):
     newSwaps = {}
     for val in baseSwaps:
         temp = val
-        for e in range(10):
+        for fold in range(10):
             temp = baseSwaps[temp]
         newSwaps[val] = temp
     return newSwaps
