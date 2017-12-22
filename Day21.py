@@ -32,10 +32,14 @@ def twistGrid(grid, flip, rot):
         newGrid = rotateGrid(newGrid)
     return newGrid
 
+def lightCount(grid):
+    return sum(sum(1 for col in row if col == '#') for row in grid)
+
 def modifyGrid(grid):
     newGrid = []
     # Okay.  Split into components.
     size = len(grid)
+    numLit = lightCount(grid)
     if size > 2 and size % 2 == 0:
         for row in range(0, size, 2):
             newGrid.append("")
@@ -65,7 +69,9 @@ def modifyGrid(grid):
             io = line.strip('\n').split(' ')
             inputRule = io[0].split('/')
             if len(inputRule) != size:
-                continue
+                continue    # Unmatchable.
+            if(lightCount(inputRule) != numLit):
+                continue    # Unmatchable.    
             for flip in range(2):
                 for rot in range(4):
                     tempGrid = twistGrid(grid, flip, rot)
@@ -73,7 +79,6 @@ def modifyGrid(grid):
                     if found == size:
                         tempGrid = io[2].split('/')
                         return tempGrid
-#                        return twistGrid(tempGrid, flip, 4-rot)
                         
     print("NO RULE FOUND THIS IS BROKEEEEEN")
     return[]
@@ -91,10 +96,7 @@ for timeRun in range(0,5):
     grid5 = modifyGrid(grid5)
     loopTime = updateLoopTime(loopTime, timeRun)
 
-lights = 0
-for row in grid5:
-    lights = lights + sum(1 for col in row if col == '#')
-print("%d lit after five iterations." % lights)
+print("%d lit after five iterations." % lightCount(grid5))
 
 grid18 = grid5.copy()
 for timeRun in range(5, 18):
@@ -104,6 +106,6 @@ for timeRun in range(5, 18):
 lights = 0
 for row in grid18:
     lights = lights + sum(1 for col in row if col == '#')
-print("%d lit after eighteen iterations." % lights)
+print("%d lit after eighteen iterations." % lightCount(grid18))
 
 print("Total elapsed time: %f" % (loopTime - startTime))
