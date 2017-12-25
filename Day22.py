@@ -1,4 +1,4 @@
-print ("Moderately awake..  Advent of Code 2017, Day 22.")
+print ("Moderately awake...  Advent of Code 2017, Day 22.")
 
 # Open the file, and get the lines.
 f = open("/home/smacgil/Development/Advent/input2017_22.txt", "r")
